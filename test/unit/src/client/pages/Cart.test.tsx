@@ -8,7 +8,7 @@ import events from "@testing-library/user-event";
 import {screen} from "@testing-library/dom";
 import {CartApi} from "../../../../../src/client/api";
 import {getMockCart} from "../../../../stubs";
-import {WrapperStore} from "../../../WrapperWithStor";
+import {WrapperStore} from "../../../../WrapperStor";
 import {Cart} from "../../../../../src/client/pages/Cart";
 import React, {FC} from "react";
 import {BrowserRouter} from "react-router-dom";

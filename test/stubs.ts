@@ -17,6 +17,7 @@ const getMockProduct = (id: number): Product => ({
 
 const getMockProducts = (n: number): ProductShortInfo[] => {
     return Array(n)
+        .fill('')
         .map((v: any, k: number) => getMockShortProduct(k));
 }
 

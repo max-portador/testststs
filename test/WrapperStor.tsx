@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
-import {MockApi} from '../MockApi';
-import {CartApi} from '../../src/client/api';
-import {initStore} from '../../src/client/store';
+import {MockApi} from './MockApi';
+import {CartApi} from '../src/client/api';
+import {initStore} from '../src/client/store';
 import {Provider} from 'react-redux';
 
 const WrapperStore: FC = ({children}) => {

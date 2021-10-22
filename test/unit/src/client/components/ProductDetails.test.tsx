@@ -7,7 +7,7 @@ import {render} from "@testing-library/react";
 import {CartApi} from "../../../../../src/client/api";
 import {getMockCart, getMockProduct} from "../../../../stubs";
 import {ProductDetails} from "../../../../../src/client/components/ProductDetails";
-import {WrapperStore} from "../../../WrapperWithStor";
+import {WrapperStore} from "../../../../WrapperStor";
 import React from "react";
 
 describe('Товар', () => {
