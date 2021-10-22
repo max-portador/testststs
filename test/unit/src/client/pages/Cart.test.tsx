@@ -44,10 +44,12 @@ describe('Корзина', () => {
     });
 
     it('наполняется товарами', () => {
-        const {container} = renderFilledCart();
-        const countItemCart = getCountItemCart(container);
-
-        expect(countItemCart).toBeGreaterThan(0);
+        // const {container} = renderFilledCart();
+        // const countItemCart = getCountItemCart(container);
+        //
+        // expect(countItemCart).toBeGreaterThan(0);
+        renderFilledCart();
+        screen.getByTestId(0);
     });
 
     it('очищается', async () => {
