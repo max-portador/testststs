@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 
-describe('github', async function() {
+describe('[H] [EXAMPLE] github', async function() {
     it('Тест, который пройдет', async function() {
         await this.browser.url('https://github.com/gemini-testing/hermione');
         await this.browser.assertView('plain', '#readme', {
