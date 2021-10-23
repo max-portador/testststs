@@ -54,15 +54,15 @@ describe('[H] Страница каталога', async function() {
     });
 });
 
-describe('[H] Страница товара', async function() {
-    it('проверка скриншотом', async function() {
-        await this.browser.url('/hw/store/catalog');
-        await this.browser.$('.ProductItem-DetailsLink').click();
-
-        await this.browser.assertView('plain', '.Product', {
-            compositeImage: true,
-        });
-    });
-});
+// describe('[H] Страница товара', async function() {
+//     it('проверка скриншотом', async function() {
+//         await this.browser.url('/hw/store/catalog');
+//         await this.browser.$('.ProductItem-DetailsLink').click();
+//
+//         await this.browser.assertView('plain', '.Product', {
+//             compositeImage: true,
+//         });
+//     });
+// });
 
 // this.browser.setWindowSize(1380, 1024)
