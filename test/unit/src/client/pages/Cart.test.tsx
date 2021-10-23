@@ -3,7 +3,7 @@
  */
 
 import {describe, expect, it} from '@jest/globals';
-import {render, RenderResult} from "@testing-library/react";
+import {render, RenderResult, within} from "@testing-library/react";
 import events from "@testing-library/user-event";
 import {screen} from "@testing-library/dom";
 import {CartApi} from "../../../../../src/client/api";
@@ -12,6 +12,7 @@ import {WrapperStore} from "../../../../WrapperStor";
 import {Cart} from "../../../../../src/client/pages/Cart";
 import React, {FC} from "react";
 import {BrowserRouter} from "react-router-dom";
+import {CartItem} from "../../../../../src/common/types";
 
 const CartWrapper: FC = () => (
     <WrapperStore>
@@ -27,12 +28,16 @@ const getCountItemCart = (container: HTMLElement): number => {
     return Array.from(elIndexCellOnCartTable).length;
 }
 
-const renderFilledCart = (): RenderResult => {
-    const productId = 0;
+const renderFilledCart = (productId: number): RenderResult => {
     const cart = new CartApi();
 
     cart.setState(getMockCart(productId));
-    return render(<CartWrapper />);
+
+    const resultRender = render(<CartWrapper />);
+
+    cart.setState({});
+
+    return resultRender;
 }
 
 describe('Корзина', () => {
@@ -43,17 +48,37 @@ describe('Корзина', () => {
         expect(countItemCart).toBe(0);
     });
 
+    it('отображается ссылка на каталог, если корзина пуста', () => {
+        render(<CartWrapper />);
+        screen.getByRole('link', {name: /catalog/i});
+    });
+
     it('наполняется товарами', () => {
-        // const {container} = renderFilledCart();
+        const productId = 0;
+        // const {container} = renderFilledCart(productId);
         // const countItemCart = getCountItemCart(container);
         //
         // expect(countItemCart).toBeGreaterThan(0);
-        renderFilledCart();
+        renderFilledCart(productId);
         screen.getByTestId(0);
     });
 
+    it('отображается верная общая сумма заказа', () => {
+        const cart = new CartApi();
+        const itemsCart = {...getMockCart(0), ...getMockCart(1)};
+        const totalPrice = Object.values(itemsCart)
+            .reduce((acc: number, itemCart: CartItem) =>  acc + (itemCart.price * itemCart.count), 0);
+
+        cart.setState(itemsCart);
+        render(<CartWrapper />);
+        screen.getByText(`$${totalPrice}`);
+        cart.setState({});
+    });
+
     it('очищается', async () => {
-        const {container} = renderFilledCart();
+        const cart = new CartApi();
+        const productId = 0;
+        const {container} = renderFilledCart(productId);
         const buttonSubmit = screen.getByRole('button', { name: /Clear shopping cart/i });
 
         await events.click(buttonSubmit);
@@ -61,19 +86,23 @@ describe('Корзина', () => {
         const countItemCart = getCountItemCart(container);
 
         expect(countItemCart).toBe(0);
+        cart.setState({});
     });
 });
 
 describe('Заказ', () => {
     it('есть возможность оформления', async () => {
-        const {container} = renderFilledCart();
+        const productId = 0;
+        const {container} = renderFilledCart(productId);
         const issetForm = !!container.querySelector('.Form');
 
         expect(issetForm).toBeTruthy();
     });
 
     it('с пустой формой не сабмитится', async () => {
-        const {container} = renderFilledCart();
+        const cart = new CartApi();
+        const productId = 0;
+        const {container} = renderFilledCart(productId);
         const buttonSubmit = screen.getByRole('button', { name: /Checkout/i });
 
         await events.click(buttonSubmit);
@@ -81,10 +110,13 @@ describe('Заказ', () => {
         const issetNoValidInput = !!container.querySelector('.Form .Form-Field.is-invalid');
 
         expect(issetNoValidInput).toBeTruthy();
+        cart.setState({});
     });
 
     it('оформляется', async () => {
-        const {container} = renderFilledCart();
+        const cart = new CartApi();
+        const productId = 0;
+        const {container} = renderFilledCart(productId);
         const inputName = screen.getByRole('textbox', { name: /name/i });
         const inputPhone = screen.getByRole('textbox', { name: /phone/i });
         const inputAddress = screen.getByRole('textbox', { name: /address/i });
@@ -98,5 +130,68 @@ describe('Заказ', () => {
         const issetSuccessMessage = !!container.querySelector('.Cart-SuccessMessage');
 
         expect(issetSuccessMessage).toBeTruthy();
+        cart.setState({});
+    });
+});
+
+describe('В корзине у каждого товара в таблице отображается', () => {
+    it('название', async () => {
+        const productId = 0;
+        const cart = new CartApi();
+        const dataCart = getMockCart(productId);
+        const product = dataCart[productId];
+
+        cart.setState(dataCart);
+        render(<CartWrapper />);
+
+        const elItemCart = screen.getByTestId(productId);
+
+        within(elItemCart).getByText(product.name);
+        cart.setState({});
+    });
+
+    it('количество', async () => {
+        const productId = 0;
+        const cart = new CartApi();
+        const dataCart = getMockCart(productId);
+        const product = dataCart[productId];
+
+        cart.setState(dataCart);
+        render(<CartWrapper />);
+
+        const elItemCart = screen.getByTestId(productId);
+
+        within(elItemCart).getAllByText(product.count.toString());
+        cart.setState({});
+    });
+
+    it('цена', async () => {
+        const productId = 0;
+        const cart = new CartApi();
+        const dataCart = getMockCart(productId);
+        const product = dataCart[productId];
+
+        cart.setState(dataCart);
+        render(<CartWrapper />);
+
+        const elItemCart = screen.getByTestId(productId);
+
+        within(elItemCart).getAllByText(`$${product.price}`);
+        cart.setState({});
+    });
+
+    it('стоимость', async () => {
+        const productId = 0;
+        const cart = new CartApi();
+        const dataCart = getMockCart(productId);
+        const product = dataCart[productId];
+
+        cart.setState(dataCart);
+        render(<CartWrapper />);
+
+        const elItemCart = screen.getByTestId(productId);
+
+        within(elItemCart).getAllByText(`$${product.price * product.count}`);
+        cart.setState({});
     });
 });

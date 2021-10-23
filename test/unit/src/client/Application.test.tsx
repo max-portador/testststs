@@ -10,6 +10,7 @@ import {Application} from "../../../../src/client/Application";
 import React from "react";
 import events from "@testing-library/user-event";
 import {WrapperRoute} from "../../../WrapperRoute";
+import {CartApi} from "../../../../src/client/api";
 
 const renderRout = (path: string): RenderResult => {
     return render(
@@ -70,22 +71,37 @@ describe('В шапке есть ссылки на', () => {
     });
 });
 
-it('Название магазина в шапке должно быть ссылкой на главную страницу', async () => {
-    const {container} = renderRout('/delivery');
+describe('Общие', () => {
+    it('Название магазина в шапке должно быть ссылкой на главную страницу', async () => {
+        const {container} = renderRout('/delivery');
 
-    await events.click(screen.getByRole('link', { name: /example store/i }));
+        await events.click(screen.getByRole('link', { name: /example store/i }));
 
-    const issetElHome = !!container.querySelector('.Home');
+        const issetElHome = !!container.querySelector('.Home');
 
-    expect(issetElHome).toBeTruthy();
-});
+        expect(issetElHome).toBeTruthy();
+    });
 
-it('при выборе элемента из меню "гамбургера", меню должно закрываться', async () => {
-    const {container} = renderRout('/');
+    it('при выборе элемента из меню "гамбургера", меню должно закрываться', async () => {
+        const {container} = renderRout('/');
 
-    await events.click(screen.getByRole('link', { name: /delivery/i }));
+        await events.click(screen.getByRole('link', { name: /delivery/i }));
 
-    const isClosedMobileMenu = !!container.querySelector('.navbar-collapse.collapse');
+        const isClosedMobileMenu = !!container.querySelector('.navbar-collapse.collapse');
 
-    expect(isClosedMobileMenu).toBeTruthy();
+        expect(isClosedMobileMenu).toBeTruthy();
+    });
+
+    it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async () => {
+        const productId = 0;
+        const cart = new CartApi();
+
+        await renderRout(`/catalog/${productId}`);
+
+        const buttonAddToCart = await screen.getByRole('button', { name: /Add to Cart/i });
+
+        await events.dblClick(buttonAddToCart);
+        screen.getByRole('link', {name: 'Cart (1)'});
+        cart.setState({});
+    });
 });

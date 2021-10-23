@@ -2,17 +2,17 @@ import {CartState, CheckoutResponse, Product, ProductShortInfo} from '../src/com
 
 const getMockShortProduct = (id: number): ProductShortInfo => ({
     id,
-    name: 'product',
-    price: 1,
+    name: `Плюшка с ${id} кунжутами`,
+    price: 100,
 });
 
 const getMockProduct = (id: number): Product => ({
     id,
-    name: 'product',
-    price: 1,
-    description: 'description',
-    material: 'material',
-    color: 'color',
+    name: `Плюшка с ${id} кунжутами`,
+    price: 100,
+    description: 'Мало кунжутов не бывает',
+    material: 'мякиш',
+    color: 'горелый',
 });
 
 const getMockProducts = (n: number): ProductShortInfo[] => {
@@ -28,8 +28,8 @@ const getMockCheckout = (n: number): CheckoutResponse => {
 const getMockCart = (id: number): CartState => ({
     [id]: {
         name: 'Vitek',
-        price: 100500,
-        count: 200,
+        price: 100 * (id + 1),
+        count: 1,
     }
 })
 
