@@ -9,7 +9,6 @@ import {Application} from "../../../../src/client/Application";
 import React from "react";
 import events from "@testing-library/user-event";
 import {WrapperRoute} from "../../../WrapperRoute";
-import {CartApi} from "../../../../src/client/api";
 
 const renderRout = (path: string): RenderResult => {
     return render(
@@ -44,34 +43,44 @@ describe('По адресу', () => {
 });
 
 describe('В шапке есть ссылки на', () => {
-    it('главную страницу', () => {
-        renderRout('/');
-        screen.getByRole('link', {name: /example store/i});
+    it('главную страницу', async () => {
+        const {container} = renderRout('/');
+        const elLinkInHeader = !!container.querySelector('.navbar a.Application-Brand');
+
+        expect(elLinkInHeader).toBeTruthy();
     });
 
     it('catalog', () => {
-        renderRout('/');
-        screen.getByRole('link', {name: /catalog/i});
+        const {container} = renderRout('/');
+        const elLinkInHeader = !!container.querySelector('.navbar a.nav-link[href$=catalog]');
+
+        expect(elLinkInHeader).toBeTruthy();
     });
 
     it('delivery', () => {
-        renderRout('/');
-        screen.getByRole('link', {name: /delivery/i});
+        const {container} = renderRout('/');
+        const elLinkInHeader = !!container.querySelector('.navbar a.nav-link[href$=delivery]');
+
+        expect(elLinkInHeader).toBeTruthy();
     });
 
     it('contacts', () => {
-        renderRout('/');
-        screen.getByRole('link', {name: /contacts/i});
+        const {container} = renderRout('/');
+        const elLinkInHeader = !!container.querySelector('.navbar a.nav-link[href$=contacts]');
+
+        expect(elLinkInHeader).toBeTruthy();
     });
 
     it('cart', () => {
-        renderRout('/');
-        screen.getByRole('link', {name: /cart/i});
+        const {container} = renderRout('/');
+        const elLinkInHeader = !!container.querySelector('.navbar a.nav-link[href$=cart]');
+
+        expect(elLinkInHeader).toBeTruthy();
     });
 });
 
 describe('Общие', () => {
-    it('Название магазина в шапке должно быть ссылкой на главную страницу', async () => {
+    it('название магазина в шапке должно быть ссылкой на главную страницу', async () => {
         const {container} = renderRout('/delivery');
 
         await events.click(screen.getByRole('link', {name: /example store/i}));
@@ -90,17 +99,4 @@ describe('Общие', () => {
 
         expect(isClosedMobileMenu).toBeTruthy();
     });
-
-    // it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async () => {
-    //     const productId = 0;
-    //     const cart = new CartApi();
-    //
-    //     await renderRout(`/catalog/${productId}`);
-    //
-    //     const buttonAddToCart = await screen.getByRole('button', {name: /Add to Cart/i});
-    //
-    //     await events.dblClick(buttonAddToCart);
-    //     screen.getByRole('link', {name: 'Cart (1)'});
-    //     cart.setState({});
-    // });
 });

@@ -11,8 +11,6 @@ import {BrowserRouter} from "react-router-dom";
 import {MockApi} from "../../../../MockApi";
 import {getMockCart} from "../../../../stubs";
 import {CartApi} from "../../../../../src/client/api";
-import {initStore} from "../../../../../src/client/store";
-import {Provider} from "react-redux";
 
 const renderCatalog = (): RenderResult => {
     return render(
@@ -27,30 +25,12 @@ const renderCatalog = (): RenderResult => {
 describe('На странице каталога', () => {
     it('должны отображаться товары, список которых приходит с сервера', async () => {
         const mockApi = new MockApi('/');
-        const cart = new CartApi();
-        const store = initStore(mockApi, cart);
         const products = await mockApi.getProducts();
         const productsId = products?.data?.map((product) => product.id);
 
-        render (
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Catalog />
-                </BrowserRouter>
-            </Provider>
-        );
-
-        await new Promise<void>(store.subscribe);
+        await renderCatalog();
         productsId.forEach((id) => screen.getAllByTestId(id));
     });
-    // it('должны отображаться товары, список которых приходит с сервера', async () => {
-    //     const mockApi = new MockApi('/');
-    //     const products = await mockApi.getProducts();
-    //     const productsId = products?.data?.map((product) => product.id);
-    //
-    //     await renderCatalog();
-    //     productsId.forEach((id) => screen.getAllByTestId(id));
-    // });
 
     it('для каждого товара отображается название, цена и ссылка на страницу с подробной информацией о товаре', async () => {
         const mockApi = new MockApi('/');
