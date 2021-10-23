@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-import {describe, expect, it} from '@jest/globals';
 import {render, RenderResult, within} from "@testing-library/react";
 import events from "@testing-library/user-event";
 import {screen} from "@testing-library/dom";
@@ -79,7 +78,7 @@ describe('Корзина', () => {
         const cart = new CartApi();
         const productId = 0;
         const {container} = renderFilledCart(productId);
-        const buttonSubmit = screen.getByRole('button', { name: /Clear shopping cart/i });
+        const buttonSubmit = screen.getByRole('button', {name: /Clear shopping cart/});
 
         await events.click(buttonSubmit);
 
@@ -103,7 +102,7 @@ describe('Заказ', () => {
         const cart = new CartApi();
         const productId = 0;
         const {container} = renderFilledCart(productId);
-        const buttonSubmit = screen.getByRole('button', { name: /Checkout/i });
+        const buttonSubmit = screen.getByRole('button', {name: /Checkout/i});
 
         await events.click(buttonSubmit);
 
@@ -117,10 +116,10 @@ describe('Заказ', () => {
         const cart = new CartApi();
         const productId = 0;
         const {container} = renderFilledCart(productId);
-        const inputName = screen.getByRole('textbox', { name: /name/i });
-        const inputPhone = screen.getByRole('textbox', { name: /phone/i });
-        const inputAddress = screen.getByRole('textbox', { name: /address/i });
-        const buttonSubmit = screen.getByRole('button', { name: /Checkout/i });
+        const inputName = screen.getByRole('textbox', {name: /name/i});
+        const inputPhone = screen.getByRole('textbox', {name: /phone/i});
+        const inputAddress = screen.getByRole('textbox', {name: /address/i});
+        const buttonSubmit = screen.getByRole('button', {name: /Checkout/i});
 
         events.type(inputName, 'Test Name');
         events.type(inputPhone, '1111111111');

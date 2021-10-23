@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-import {describe, expect, it} from '@jest/globals';
 import {render, RenderResult} from "@testing-library/react";
 import {screen} from "@testing-library/dom";
 import {WrapperStore} from "../../../WrapperStor";
@@ -25,49 +24,49 @@ const renderRout = (path: string): RenderResult => {
 describe('По адресу', () => {
     it('/catalog открывается страница "Catalog"', () => {
         renderRout('/catalog');
-        screen.getByRole('heading', { name: /Catalog/i });
+        screen.getByRole('heading', {name: /Catalog/i});
     });
 
     it('/delivery открывается страница "Delivery"', () => {
         renderRout('/delivery');
-        screen.getByRole('heading', { name: /Delivery/i });
+        screen.getByRole('heading', {name: /Delivery/i});
     });
 
     it('/contacts открывается страница "Contacts"', () => {
         renderRout('/contacts');
-        screen.getByRole('heading', { name: /Contacts/i });
+        screen.getByRole('heading', {name: /Contacts/i});
     });
 
     it('/cart открывается страница "Shopping cart"', () => {
         renderRout('/cart');
-        screen.getByRole('heading', { name: /Shopping cart/i });
+        screen.getByRole('heading', {name: /Shopping cart/i});
     });
 });
 
 describe('В шапке есть ссылки на', () => {
     it('главную страницу', () => {
         renderRout('/');
-        screen.getByRole('link', { name: /example store/i });
+        screen.getByRole('link', {name: /example store/i});
     });
 
     it('catalog', () => {
         renderRout('/');
-        screen.getByRole('link', { name: /catalog/i });
+        screen.getByRole('link', {name: /catalog/i});
     });
 
     it('delivery', () => {
         renderRout('/');
-        screen.getByRole('link', { name: /delivery/i });
+        screen.getByRole('link', {name: /delivery/i});
     });
 
     it('contacts', () => {
         renderRout('/');
-        screen.getByRole('link', { name: /contacts/i });
+        screen.getByRole('link', {name: /contacts/i});
     });
 
     it('cart', () => {
         renderRout('/');
-        screen.getByRole('link', { name: /cart/i });
+        screen.getByRole('link', {name: /cart/i});
     });
 });
 
@@ -75,7 +74,7 @@ describe('Общие', () => {
     it('Название магазина в шапке должно быть ссылкой на главную страницу', async () => {
         const {container} = renderRout('/delivery');
 
-        await events.click(screen.getByRole('link', { name: /example store/i }));
+        await events.click(screen.getByRole('link', {name: /example store/i}));
 
         const issetElHome = !!container.querySelector('.Home');
 
@@ -85,7 +84,7 @@ describe('Общие', () => {
     it('при выборе элемента из меню "гамбургера", меню должно закрываться', async () => {
         const {container} = renderRout('/');
 
-        await events.click(screen.getByRole('link', { name: /delivery/i }));
+        await events.click(screen.getByRole('link', {name: /delivery/i}));
 
         const isClosedMobileMenu = !!container.querySelector('.navbar-collapse.collapse');
 
@@ -98,7 +97,7 @@ describe('Общие', () => {
     //
     //     await renderRout(`/catalog/${productId}`);
     //
-    //     const buttonAddToCart = await screen.getByRole('button', { name: /Add to Cart/i });
+    //     const buttonAddToCart = await screen.getByRole('button', {name: /Add to Cart/i});
     //
     //     await events.dblClick(buttonAddToCart);
     //     screen.getByRole('link', {name: 'Cart (1)'});

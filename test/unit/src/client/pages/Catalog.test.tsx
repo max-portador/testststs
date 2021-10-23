@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-import {describe, it} from '@jest/globals';
 import {render, RenderResult, within} from "@testing-library/react";
 import {screen} from "@testing-library/dom";
 import {WrapperStore} from "../../../../WrapperStor";
@@ -36,15 +35,13 @@ describe('На странице каталога', () => {
     it('для каждого товара отображается название, цена и ссылка на страницу с подробной информацией о товаре', async () => {
         const mockApi = new MockApi('/');
         const products = await mockApi.getProducts();
-        const productsId = products?.data?.map((product) => product.id);
-
         await renderCatalog();
 
-        productsId.forEach((id) => {
-            const elProduct = screen.getAllByTestId(id)?.[0];
-            within(elProduct).getByRole('heading');
-            within(elProduct).getByText(`$${products?.data?.[id].price}`);
-            within(elProduct).getByRole('link');
+        products.data.forEach((product) => {
+            const elProduct = screen.getAllByTestId(product.id)?.[0];
+            within(elProduct).getByRole('heading', {name: product.name});
+            within(elProduct).getByText(`$${product.price}`);
+            within(elProduct).getByRole('link', {name: /Details/i});
         });
     });
 

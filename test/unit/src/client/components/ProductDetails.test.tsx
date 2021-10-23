@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-import {it, expect, describe} from '@jest/globals';
 import {render, RenderResult} from "@testing-library/react";
 import {screen} from "@testing-library/dom";
 import {CartApi} from "../../../../../src/client/api";
@@ -89,7 +88,7 @@ describe('На странице товара', () => {
         const product = getMockProduct(productId);
 
         renderProduct(product);
-        screen.getByRole('button', { name: /Add to Cart/i });
+        screen.getByRole('button', {name: /Add to Cart/i});
     });
 
     it('отображается сообщение о наличии товара в корзине, если он добавлен в корзину', () => {
@@ -110,7 +109,7 @@ describe('На странице товара', () => {
 
         renderProduct(product);
 
-        const buttonSubmit = screen.getByRole('button', { name: /Add to Cart/i });
+        const buttonSubmit = screen.getByRole('button', {name: /Add to Cart/i});
 
         await events.click(buttonSubmit);
 
