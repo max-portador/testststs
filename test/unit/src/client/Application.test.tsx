@@ -11,22 +11,22 @@ import {ApplicationRoute} from "../../../ApplicationRoute";
 describe('По адресу', () => {
     it('/catalog открывается страница "Catalog"', () => {
         render(<ApplicationRoute path="/catalog" />);
-        screen.getByRole('heading', {name: /Catalog/i});
+        screen.getByRole('heading', {name: /Catalog/i, level: 1});
     });
 
     it('/delivery открывается страница "Delivery"', () => {
         render(<ApplicationRoute path="/delivery" />);
-        screen.getByRole('heading', {name: /Delivery/i});
+        screen.getByRole('heading', {name: /Delivery/i, level: 1});
     });
 
     it('/contacts открывается страница "Contacts"', () => {
         render(<ApplicationRoute path="/contacts" />);
-        screen.getByRole('heading', {name: /Contacts/i});
+        screen.getByRole('heading', {name: /Contacts/i, level: 1});
     });
 
     it('/cart открывается страница "Shopping cart"', () => {
         render(<ApplicationRoute path="/cart" />);
-        screen.getByRole('heading', {name: /Shopping cart/i});
+        screen.getByRole('heading', {name: /Shopping cart/i, level: 1});
     });
 });
 

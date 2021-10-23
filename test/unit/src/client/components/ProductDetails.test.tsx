@@ -21,6 +21,60 @@ const renderProduct = (product: Product): RenderResult => {
 };
 
 describe('На странице товара', () => {
+    it('отображается название', () => {
+        const productId = 0;
+        const product = getMockProduct(productId);
+        const {container} = renderProduct(product);
+        const value = container.querySelector('.ProductDetails-Name').innerHTML;
+
+        expect(value).toBe(product.name);
+    });
+
+    it('отображается описание', () => {
+        const productId = 0;
+        const product = getMockProduct(productId);
+        const {container} = renderProduct(product);
+        const value = container.querySelector('.ProductDetails-Description').innerHTML;
+
+        expect(value).toBe(product.description);
+    });
+
+    it('отображается цена', () => {
+        const productId = 0;
+        const product = getMockProduct(productId);
+        const {container} = renderProduct(product);
+        const value = container.querySelector('.ProductDetails-Price').innerHTML;
+
+        expect(value).toBe(`$${product.price}`);
+    });
+
+    it('отображается цвет', () => {
+        const productId = 0;
+        const product = getMockProduct(productId);
+        const {container} = renderProduct(product);
+        const value = container.querySelector('.ProductDetails-Color').innerHTML;
+
+        expect(value).toBe(product.color);
+    });
+
+    it('отображается материал', () => {
+        const productId = 0;
+        const product = getMockProduct(productId);
+        const {container} = renderProduct(product);
+        const value = container.querySelector('.ProductDetails-Material').innerHTML;
+
+        expect(value).toBe(product.material);
+    });
+
+    it('отображается кнопка добавления в корзину', () => {
+        const productId = 0;
+        const product = getMockProduct(productId);
+        const {container} = renderProduct(product);
+        const issetButton = !!container.querySelector('.ProductDetails-AddToCart');
+
+        expect(issetButton).toBeTruthy();
+    });
+
     it('добавляется в корзину', () => {
         const productId = 0;
         const product = getMockProduct(productId);
@@ -33,62 +87,6 @@ describe('На странице товара', () => {
 
         expect(cartState).toHaveProperty(productId.toString());
         cart.setState({});
-    });
-
-    it('отображается название', () => {
-        const productId = 0;
-        const product = getMockProduct(productId);
-
-        renderProduct(product);
-        screen.getByText(product.name);
-    });
-
-    it('отображается описание', () => {
-        const productId = 0;
-        const product = getMockProduct(productId);
-
-        renderProduct(product);
-        screen.getByText(product.description);
-    });
-
-    it('отображается цена', () => {
-        const productId = 0;
-        const product = getMockProduct(productId);
-
-        renderProduct(product);
-        screen.getByText(`$${product.price}`);
-    });
-
-    it('отображается описание', () => {
-        const productId = 0;
-        const product = getMockProduct(productId);
-
-        renderProduct(product);
-        screen.getByText(product.description);
-    });
-
-    it('отображается цвет', () => {
-        const productId = 0;
-        const product = getMockProduct(productId);
-
-        renderProduct(product);
-        screen.getByText(product.color);
-    });
-
-    it('отображается материал', () => {
-        const productId = 0;
-        const product = getMockProduct(productId);
-
-        renderProduct(product);
-        screen.getByText(product.material);
-    });
-
-    it('отображается описание', () => {
-        const productId = 0;
-        const product = getMockProduct(productId);
-
-        renderProduct(product);
-        screen.getByRole('button', {name: /Add to Cart/i});
     });
 
     it('отображается сообщение о наличии товара в корзине, если он добавлен в корзину', () => {

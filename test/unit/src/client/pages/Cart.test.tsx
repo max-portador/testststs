@@ -55,7 +55,7 @@ describe('Корзина', () => {
         const catalogLink = catalogLinks[catalogLinks.length - 1];
 
         await events.click(catalogLink);
-        screen.getByRole('heading', {name: /Catalog/i});
+        screen.getByRole('heading', {name: /Catalog/i, level: 1});
     });
 
     it('наполняется товарами', () => {

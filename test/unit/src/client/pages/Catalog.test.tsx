@@ -11,6 +11,8 @@ import {BrowserRouter} from "react-router-dom";
 import {MockApi} from "../../../../MockApi";
 import {getMockCart} from "../../../../stubs";
 import {CartApi} from "../../../../../src/client/api";
+import {ApplicationRoute} from "../../../../ApplicationRoute";
+import events from "@testing-library/user-event";
 
 const renderCatalog = (): RenderResult => {
     return render(
@@ -39,10 +41,24 @@ describe('На странице каталога', () => {
 
         products.data.forEach((product) => {
             const elProduct = screen.getAllByTestId(product.id)?.[0];
-            within(elProduct).getByRole('heading', {name: product.name});
+            within(elProduct).getByRole('heading', {name: product.name, level: 5});
             within(elProduct).getByText(`$${product.price}`);
             within(elProduct).getByRole('link', {name: /Details/i});
         });
+    });
+
+    it('ссылка ведет на страницу с подробной информацией о товаре', async () => {
+        const mockApi = new MockApi('/');
+        const products = await mockApi.getProducts();
+        const product = products.data[0];
+
+        await render(<ApplicationRoute path={`/catalog`} />);
+
+        const elProduct = screen.getAllByTestId(product.id)?.[0];
+        const link = within(elProduct).getByRole('link', {name: /Details/i});
+
+        await events.click(link);
+        screen.getByRole('heading', {name: product.name, level: 1});
     });
 
     it('у товара, добавленного в корзину, отображается сообщение о наличии его в корзине', async () => {
