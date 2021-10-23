@@ -5,9 +5,9 @@ import {initStore} from '../src/client/store';
 import {Provider} from 'react-redux';
 
 const WrapperStore: FC = ({children}) => {
-    const api = new MockApi('/');
+    const mockApi = new MockApi('/');
     const cart = new CartApi();
-    const store = initStore(api, cart);
+    const store = initStore(mockApi, cart);
 
     return (
         <Provider store={store}>

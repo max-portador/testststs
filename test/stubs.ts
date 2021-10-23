@@ -19,6 +19,7 @@ const getMockProducts = (n: number): ProductShortInfo[] => {
     return Array(n)
         .fill('')
         .map((v: any, k: number) => getMockShortProduct(k));
+    // return [];
 }
 
 const getMockCheckout = (n: number): CheckoutResponse => {
