@@ -11,52 +11,52 @@
 //     });
 // });
 
-describe('[H] Страница корзины', async function() {
-    it('содержимое должно сохраняться между перезагрузками страницы', async function() {
-        const browser =  this.browser;
-
-        await browser.url('/hw/store/catalog/0');
-        await browser.$('.ProductDetails-AddToCart').click();
-        await browser.url('/hw/store/cart');
-        await browser.url('/hw/store/cart');
-        await browser.assertView('plain', '.Cart');
-    });
-});
+// describe('[H] Страница корзины', async function() {
+//     it('содержимое должно сохраняться между перезагрузками страницы', async function() {
+//         const browser =  this.browser;
+//
+//         await browser.url('/hw/store/catalog/0');
+//         await browser.$('.ProductDetails-AddToCart').click();
+//         await browser.url('/hw/store/cart');
+//         await browser.url('/hw/store/cart');
+//         await browser.assertView('plain', '.Cart');
+//     });
+// });
 
 describe('[H] Страница главная', async function() {
     it('проверка скриншотом', async function() {
         await browser.url('/hw/store/');
-        await browser.assertView('plain', '.Home');
+        await browser.assertView('home', '.Home');
     });
 });
 
 describe('[H] Страница доставки', async function() {
     it('проверка скриншотом', async function() {
         await browser.url('/hw/store/delivery');
-        await browser.assertView('plain', '.Delivery');
+        await browser.assertView('delivery', '.Delivery');
     });
 });
 
 describe('[H] Страница контакты', async function() {
     it('проверка скриншотом', async function() {
         await browser.url('/hw/store/contacts');
-        await browser.assertView('plain', '.Contacts');
+        await browser.assertView('contacts', '.Contacts');
     });
 });
-
-describe('[H] Страница каталога', async function() {
-    it('проверка скриншотом', async function() {
-        const sParent = '.Catalog';
-
-        await browser.url('/hw/store/catalog');
-        await browser.$(sParent).waitForExist();
-        await browser.assertView('plain', sParent);
-    });
-});
-
-describe('[H] Страница товара', async function() {
-    it('проверка скриншотом', async function() {
-        await browser.url('/hw/store/catalog/0');
-        await browser.assertView('plain', '.Product');
-    });
-});
+//
+// describe('[H] Страница каталога', async function() {
+//     it('проверка скриншотом', async function() {
+//         const sParent = '.Catalog';
+//
+//         await browser.url('/hw/store/catalog');
+//         await browser.$(sParent).waitForExist();
+//         await browser.assertView('plain', sParent);
+//     });
+// });
+//
+// describe('[H] Страница товара', async function() {
+//     it('проверка скриншотом', async function() {
+//         await browser.url('/hw/store/catalog/0');
+//         await browser.assertView('plain', '.Product');
+//     });
+// });
