@@ -3,7 +3,7 @@
  */
 
 import {it, expect, describe} from '@jest/globals';
-import {render} from "@testing-library/react";
+import {render, RenderResult} from "@testing-library/react";
 import {screen} from "@testing-library/dom";
 import {CartApi} from "../../../../../src/client/api";
 import {getMockCart, getMockProduct} from "../../../../stubs";
@@ -13,7 +13,7 @@ import React from "react";
 import {Product} from "../../../../../src/common/types";
 import events from "@testing-library/user-event";
 
-const renderProduct = (product: Product) => {
+const renderProduct = (product: Product): RenderResult => {
     return render(
         <WrapperStore>
             <ProductDetails product={product} />

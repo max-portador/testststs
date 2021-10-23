@@ -92,16 +92,16 @@ describe('Общие', () => {
         expect(isClosedMobileMenu).toBeTruthy();
     });
 
-    it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async () => {
-        const productId = 0;
-        const cart = new CartApi();
-
-        await renderRout(`/catalog/${productId}`);
-
-        const buttonAddToCart = await screen.getByRole('button', { name: /Add to Cart/i });
-
-        await events.dblClick(buttonAddToCart);
-        screen.getByRole('link', {name: 'Cart (1)'});
-        cart.setState({});
-    });
+    // it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async () => {
+    //     const productId = 0;
+    //     const cart = new CartApi();
+    //
+    //     await renderRout(`/catalog/${productId}`);
+    //
+    //     const buttonAddToCart = await screen.getByRole('button', { name: /Add to Cart/i });
+    //
+    //     await events.dblClick(buttonAddToCart);
+    //     screen.getByRole('link', {name: 'Cart (1)'});
+    //     cart.setState({});
+    // });
 });
