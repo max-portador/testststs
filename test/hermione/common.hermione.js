@@ -18,7 +18,7 @@ describe('[H] Страница корзины', async function() {
         await this.browser.url('/hw/store/cart');
         await this.browser.url('/hw/store/cart');
 
-        await this.browser.assertView('plain', '.Cart', {
+        await this.browser.assertView('plain1', '.Application', {
             compositeImage: true,
         });
     });
@@ -28,7 +28,7 @@ describe('[H] Страница главная', async function() {
     it('проверка скриншотом', async function() {
         await this.browser.url('/hw/store/');
 
-        await this.browser.assertView('plain', '.Home', { // '.Application' ?
+        await this.browser.assertView('plain2', '.Application', { // '.Application' ?
             compositeImage: true,
         });
     });
@@ -38,7 +38,7 @@ describe('[H] Страница доставки', async function() {
     it('проверка скриншотом', async function() {
         await this.browser.url('/hw/store/delivery');
 
-        await this.browser.assertView('plain', '.Delivery', {
+        await this.browser.assertView('plain3', '.Application', {
             compositeImage: true,
         });
     });
@@ -48,7 +48,7 @@ describe('[H] Страница контакты', async function() {
     it('проверка скриншотом', async function() {
         await this.browser.url('/hw/store/contacts');
 
-        await this.browser.assertView('plain', '.Contacts', {
+        await this.browser.assertView('plain4', '.Application', {
             compositeImage: true,
         });
     });
@@ -56,24 +56,15 @@ describe('[H] Страница контакты', async function() {
 
 describe('[H] Страница каталога', async function() {
     it('проверка скриншотом', async function() {
-        const sParent = '.Catalog';
+        const sParent = '.Application';
 
         await this.browser.url('/hw/store/catalog');
         await this.browser.$(sParent).waitForExist();
 
-        await this.browser.assertView('plain', sParent, {
+        await this.browser.assertView('plain5', sParent, {
             compositeImage: true,
         });
     });
 });
 
-describe('[H] Страница товара', async function() {
-    it('проверка скриншотом', async function() {
-        await this.browser.url('/hw/store/catalog');
-        await this.browser.$('.ProductItem-DetailsLink').click();
-
-        await this.browser.assertView('plain', '.Product', {
-            compositeImage: true,
-        });
-    });
-});
+// this.browser.setWindowSize(1380, 1024)
