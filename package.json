@@ -5,8 +5,7 @@
         "start": "nodemon ./src/server/index.ts",
         "test": "jest",
         "build": "webpack --mode=production --node-env=production",
-        "watch": "webpack --watch",
-        "hermione": "hermione ./test/hermione/"
+        "watch": "webpack --watch"
     },
     "dependencies": {
         "@bem-react/classname": "^1.5.12",

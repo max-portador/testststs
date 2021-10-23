@@ -1,15 +1,3 @@
-// describe('[H] Первый тест!', async function() {
-//     it('должно "что то" произойти', async function() {
-//         const browser =  this.browser;
-//
-//         await browser.url('/hw/store/');
-// // await new Promise((r) => setTimeout(r, 1000));
-//
-//         const el = await browser.$('.Home');
-//
-//         await el.waitForExist();
-//     });
-// });
 describe('[H] Страница корзины', async function() {
     it('содержимое должно сохраняться между перезагрузками страницы', async function() {
         await this.browser.url('/hw/store/catalog');
@@ -18,9 +6,11 @@ describe('[H] Страница корзины', async function() {
         await this.browser.url('/hw/store/cart');
         await this.browser.url('/hw/store/cart');
 
-        await this.browser.assertView('plain1', '.Application', {
+        await this.browser.assertView('plain', '.Cart', {
             compositeImage: true,
         });
+
+        await this.browser.$('.Cart-Clear').click();
     });
 });
 
@@ -28,7 +18,7 @@ describe('[H] Страница главная', async function() {
     it('проверка скриншотом', async function() {
         await this.browser.url('/hw/store/');
 
-        await this.browser.assertView('plain2', '.Application', { // '.Application' ?
+        await this.browser.assertView('plain', '.Home', {
             compositeImage: true,
         });
     });
@@ -38,7 +28,7 @@ describe('[H] Страница доставки', async function() {
     it('проверка скриншотом', async function() {
         await this.browser.url('/hw/store/delivery');
 
-        await this.browser.assertView('plain3', '.Application', {
+        await this.browser.assertView('plain', '.Delivery', {
             compositeImage: true,
         });
     });
@@ -48,7 +38,7 @@ describe('[H] Страница контакты', async function() {
     it('проверка скриншотом', async function() {
         await this.browser.url('/hw/store/contacts');
 
-        await this.browser.assertView('plain4', '.Application', {
+        await this.browser.assertView('plain', '.Contacts', {
             compositeImage: true,
         });
     });
@@ -56,12 +46,20 @@ describe('[H] Страница контакты', async function() {
 
 describe('[H] Страница каталога', async function() {
     it('проверка скриншотом', async function() {
-        const sParent = '.Application';
-
         await this.browser.url('/hw/store/catalog');
-        await this.browser.$(sParent).waitForExist();
 
-        await this.browser.assertView('plain5', sParent, {
+        await this.browser.assertView('plain', '.Catalog', {
+            compositeImage: true,
+        });
+    });
+});
+
+describe('[H] Страница товара', async function() {
+    it('проверка скриншотом', async function() {
+        await this.browser.url('/hw/store/catalog');
+        await this.browser.$('.ProductItem-DetailsLink').click();
+
+        await this.browser.assertView('plain', '.Product', {
             compositeImage: true,
         });
     });
