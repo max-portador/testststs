@@ -12,6 +12,7 @@ import {Cart} from "../../../../../src/client/pages/Cart";
 import React, {FC} from "react";
 import {BrowserRouter} from "react-router-dom";
 import {CartItem} from "../../../../../src/common/types";
+import {ApplicationRoute} from "../../../../ApplicationRoute";
 
 const CartWrapper: FC = () => (
     <WrapperStore>
@@ -47,9 +48,14 @@ describe('Корзина', () => {
         expect(countItemCart).toBe(0);
     });
 
-    it('отображается ссылка на каталог, если корзина пуста', () => {
-        render(<CartWrapper />);
-        screen.getByRole('link', {name: /catalog/i});
+    it('отображается ссылка на каталог, если корзина пуста', async () => {
+        render(<ApplicationRoute path="/cart" />);
+
+        const catalogLinks = screen.getAllByRole('link', {name: /catalog/i});
+        const catalogLink = catalogLinks[catalogLinks.length - 1];
+
+        await events.click(catalogLink);
+        screen.getByRole('heading', {name: /Catalog/i});
     });
 
     it('наполняется товарами', () => {
@@ -133,7 +139,7 @@ describe('Заказ', () => {
     });
 });
 
-describe('В корзине у каждого товара в таблице отображается', () => {
+describe('В корзине у каждого товара в таблице отображается верное', () => {
     it('название', async () => {
         const productId = 0;
         const cart = new CartApi();
@@ -144,23 +150,9 @@ describe('В корзине у каждого товара в таблице о�
         render(<CartWrapper />);
 
         const elItemCart = screen.getByTestId(productId);
+        const valueOnCell = elItemCart.querySelector('.Cart-Name').innerHTML;
 
-        within(elItemCart).getByText(product.name);
-        cart.setState({});
-    });
-
-    it('количество', async () => {
-        const productId = 0;
-        const cart = new CartApi();
-        const dataCart = getMockCart(productId);
-        const product = dataCart[productId];
-
-        cart.setState(dataCart);
-        render(<CartWrapper />);
-
-        const elItemCart = screen.getByTestId(productId);
-
-        within(elItemCart).getAllByText(product.count.toString());
+        expect(valueOnCell).toBe(product.name);
         cart.setState({});
     });
 
@@ -174,12 +166,13 @@ describe('В корзине у каждого товара в таблице о�
         render(<CartWrapper />);
 
         const elItemCart = screen.getByTestId(productId);
+        const valueOnCell = elItemCart.querySelector('.Cart-Price').innerHTML;
 
-        within(elItemCart).getAllByText(`$${product.price}`);
+        expect(valueOnCell).toBe(`$${product.price}`);
         cart.setState({});
     });
 
-    it('стоимость', async () => {
+    it('количество', async () => {
         const productId = 0;
         const cart = new CartApi();
         const dataCart = getMockCart(productId);
@@ -189,8 +182,25 @@ describe('В корзине у каждого товара в таблице о�
         render(<CartWrapper />);
 
         const elItemCart = screen.getByTestId(productId);
+        const valueOnCell = elItemCart.querySelector('.Cart-Count').innerHTML;
 
-        within(elItemCart).getAllByText(`$${product.price * product.count}`);
+        expect(valueOnCell).toBe(product.count.toString());
+        cart.setState({});
+    });
+
+    it('общая стоимость', async () => {
+        const productId = 0;
+        const cart = new CartApi();
+        const dataCart = getMockCart(productId);
+        const product = dataCart[productId];
+
+        cart.setState(dataCart);
+        render(<CartWrapper />);
+
+        const elItemCart = screen.getByTestId(productId);
+        const valueOnCell = elItemCart.querySelector('.Cart-Total').innerHTML;
+
+        expect(valueOnCell).toBe(`$${product.price * product.count}`);
         cart.setState({});
     });
 });
