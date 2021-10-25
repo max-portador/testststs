@@ -2,17 +2,17 @@ import {CartState, CheckoutResponse, Product, ProductShortInfo} from '../src/com
 
 const getMockShortProduct = (id: number): ProductShortInfo => ({
     id,
-    name: `Плюшка с ${id} кунжутами`,
-    price: 100,
+    name: `Portal Gun, ${id} shots`,
+    price: 300,
 });
 
 const getMockProduct = (id: number): Product => ({
     id,
-    name: `Плюшка с ${id} кунжутами`,
+    name: `Portal Gun, ${id} shots`,
     price: 100,
-    description: 'Мало кунжутов не бывает',
-    material: 'мякиш',
-    color: 'горелый',
+    description: 'Multiverse explorer',
+    material: 'plastic',
+    color: 'green',
 });
 
 const getMockProducts = (n: number): ProductShortInfo[] => {
@@ -28,9 +28,9 @@ const getMockCheckout = (n: number): CheckoutResponse => {
 
 const getMockCart = (id: number): CartState => ({
     [id]: {
-        name: 'Vitek',
-        price: 100 * (id + 1),
-        count: 1,
+        name: 'Plumbus',
+        price: 10 * (id + 1),
+        count: 5,
     }
 })
 

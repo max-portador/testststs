@@ -7,16 +7,16 @@ import {screen} from "@testing-library/dom";
 import {CartApi} from "../../../../../src/client/api";
 import {getMockCart, getMockProduct} from "../../../../stubs";
 import {ProductDetails} from "../../../../../src/client/components/ProductDetails";
-import {WrapperStore} from "../../../../WrapperStor";
+import {MockStore} from "../../../../MockStore";
 import React from "react";
 import {Product} from "../../../../../src/common/types";
 import events from "@testing-library/user-event";
 
 const renderProduct = (product: Product): RenderResult => {
     return render(
-        <WrapperStore>
+        <MockStore>
             <ProductDetails product={product} />
-        </WrapperStore>
+        </MockStore>
     );
 };
 

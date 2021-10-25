@@ -1,8 +1,9 @@
+// @ts-ignore
 import React, {FC, PropsWithChildren} from 'react';
 import {createMemoryHistory} from "history";
 import {Router} from "react-router";
 
-const WrapperRoute: FC<PropsWithChildren<any>> = ({path, children}) => {
+const MockRoute: FC<PropsWithChildren<any>> = ({path, children}) => {
     const history = createMemoryHistory({
         initialEntries: [path],
         initialIndex: 0,
@@ -15,4 +16,4 @@ const WrapperRoute: FC<PropsWithChildren<any>> = ({path, children}) => {
     );
 }
 
-export {WrapperRoute};
+export {MockRoute};

@@ -4,23 +4,23 @@
 
 import {render, RenderResult, within} from "@testing-library/react";
 import {screen} from "@testing-library/dom";
-import {WrapperStore} from "../../../../WrapperStor";
+import {MockStore} from "../../../../MockStore";
 import React from "react";
 import {Catalog} from "../../../../../src/client/pages/Catalog";
 import {BrowserRouter} from "react-router-dom";
 import {MockApi} from "../../../../MockApi";
 import {getMockCart} from "../../../../stubs";
 import {CartApi} from "../../../../../src/client/api";
-import {ApplicationRoute} from "../../../../ApplicationRoute";
+import {TestApp} from "../../../../TestApp";
 import events from "@testing-library/user-event";
 
 const renderCatalog = (): RenderResult => {
     return render(
-        <WrapperStore>
+        <MockStore>
             <BrowserRouter>
                 <Catalog />
             </BrowserRouter>
-        </WrapperStore>
+        </MockStore>
     );
 }
 
@@ -52,7 +52,7 @@ describe('На странице каталога', () => {
         const products = await mockApi.getProducts();
         const product = products.data[0];
 
-        await render(<ApplicationRoute path={`/catalog`} />);
+        await render(<TestApp path={`/catalog`} />);
 
         const elProduct = screen.getAllByTestId(product.id)?.[0];
         const link = within(elProduct).getByRole('link', {name: /Details/i});

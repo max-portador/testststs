@@ -7,19 +7,19 @@ import events from "@testing-library/user-event";
 import {screen} from "@testing-library/dom";
 import {CartApi} from "../../../../../src/client/api";
 import {getMockCart} from "../../../../stubs";
-import {WrapperStore} from "../../../../WrapperStor";
+import {MockStore} from "../../../../MockStore";
 import {Cart} from "../../../../../src/client/pages/Cart";
 import React, {FC} from "react";
 import {BrowserRouter} from "react-router-dom";
 import {CartItem} from "../../../../../src/common/types";
-import {ApplicationRoute} from "../../../../ApplicationRoute";
+import {TestApp} from "../../../../TestApp";
 
 const CartWrapper: FC = () => (
-    <WrapperStore>
+    <MockStore>
         <BrowserRouter>
             <Cart />
         </BrowserRouter>
-    </WrapperStore>
+    </MockStore>
 );
 
 const getCountItemCart = (container: HTMLElement): number => {
@@ -49,7 +49,7 @@ describe('Корзина', () => {
     });
 
     it('отображается ссылка на каталог, если корзина пуста', async () => {
-        render(<ApplicationRoute path="/cart" />);
+        render(<TestApp path="/cart" />);
 
         const catalogLinks = screen.getAllByRole('link', {name: /catalog/i});
         const catalogLink = catalogLinks[catalogLinks.length - 1];

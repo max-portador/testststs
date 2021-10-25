@@ -1,10 +1,11 @@
+// @ts-ignore
 import React, {FC} from 'react';
 import {MockApi} from './MockApi';
 import {CartApi} from '../src/client/api';
 import {initStore} from '../src/client/store';
 import {Provider} from 'react-redux';
 
-const WrapperStore: FC = ({children}) => {
+const MockStore: FC = ({children}) => {
     const mockApi = new MockApi('/');
     const cart = new CartApi();
     const store = initStore(mockApi, cart);
@@ -16,4 +17,4 @@ const WrapperStore: FC = ({children}) => {
     );
 }
 
-export {WrapperStore};
+export {MockStore};
